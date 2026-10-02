@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REGISTER OPERATOR // DIGICART</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .phone-prefix-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .country-code-badge {
+      background: var(--bg-paper-light);
+      border: 1px solid var(--border-paper-strong);
+      color: var(--evergreen-dark);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: var(--radius-sm);
+    }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="main-container auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="mono-spec" style="font-size: 0.75rem; color: var(--text-subtle);">[SYS // ACCOUNT PROVISIONING]</div>
+        <h1 class="auth-title">Register Account</h1>
+        <p class="auth-subtitle">Establish mobile credentials for dispatch and telemetry access</p>
+      </div>
+
+      <form id="register-form" onsubmit="handleRegisterFormSubmit(event)">
+        <div class="form-group">
+          <label class="form-label" for="reg-name">FULL NAME</label>
+          <input type="text" id="reg-name" name="name" class="form-control" placeholder="Alex Johnson" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-phone">MOBILE PHONE NUMBER</label>
+          <div class="phone-prefix-wrap">
+            <span class="country-code-badge">📱 +91 / 🇮🇳</span>
+            <input 
+              type="tel" 
+              id="reg-phone" 
+              name="phone" 
+              class="form-control" 
+              placeholder="e.g. 9876543210" 
+              required 
+              style="font-family: var(--font-mono);"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-role">ACCESS ROLE</label>
+          <select id="reg-role" name="role" class="form-control">
+            <option value="customer">Customer Access</option>
+            <option value="admin">System Admin Access</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.85rem;">
+          CREATE MOBILE ACCOUNT →
+        </button>
+      </form>
+
+      <div style="text-align: center; margin-top: 1.5rem; font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-muted);">
+        EXISTING OPERATOR? <a href="/pages/login.html" style="color: var(--evergreen-dark); font-weight: 700; text-decoration: underline;">SIGN IN WITH OTP</a>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/auth.js"></script>
+</body>
+</html>

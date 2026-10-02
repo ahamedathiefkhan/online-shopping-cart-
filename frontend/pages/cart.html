@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHOPPING CART // DIGICART</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="main-container">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; border-bottom: 2px solid var(--border-paper-strong); padding-bottom: 1rem;">
+      <div>
+        <div class="mono-spec" style="font-size: 0.75rem; color: var(--text-subtle);">[SPEC // CART TELEMETRY]</div>
+        <h1 style="font-size: 2rem; color: var(--evergreen-dark);">Active Shopping Cart</h1>
+      </div>
+      <button onclick="handleClearCart()" class="btn-outline" style="font-size: 0.8rem; padding: 0.45rem 0.85rem;">CLEAR CART</button>
+    </div>
+
+    <div class="cart-layout">
+      <!-- Items Table Card -->
+      <div id="cart-items-container" class="cart-table-card">
+        <div style="text-align: center; padding: 3rem; color: var(--text-muted); font-family: var(--font-mono);">
+          [SYS // FETCHING CART INVENTORY...]
+        </div>
+      </div>
+
+      <!-- Order Summary Card -->
+      <div id="cart-summary-box" class="summary-card">
+        <h3 style="margin-bottom: 1.25rem; color: #ffffff; font-size: 1.25rem;">Dispatch Summary</h3>
+        
+        <div class="summary-row">
+          <span>SUBTOTAL</span>
+          <span id="summary-subtotal">₹0.00</span>
+        </div>
+
+        <div class="summary-row">
+          <span>EST. TAX (GST 18%)</span>
+          <span id="summary-tax">₹0.00</span>
+        </div>
+
+        <div class="summary-row">
+          <span>DISPATCH FEE</span>
+          <span id="summary-shipping">FREE</span>
+        </div>
+
+        <div class="summary-row total">
+          <span>TOTAL</span>
+          <span id="summary-grand-total">₹0.00</span>
+        </div>
+
+        <a href="/pages/checkout.html" class="btn-primary" style="display: block; text-align: center; margin-top: 1.5rem; padding: 0.85rem;">
+          PROCEED TO CHECKOUT →
+        </a>
+
+        <div style="text-align: center; margin-top: 1rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--evergreen-muted);">
+          🔒 ENCRYPTED CHECKOUT PIPELINE
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/cart.js"></script>
+</body>
+</html>

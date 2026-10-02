@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>digiCart — Smart E-Commerce Data System</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="main-container">
+    <!-- Hero Banner — Industrial Evergreen Telemetry Board -->
+    <section class="hero-banner">
+      <div class="hero-telemetry-header">
+        <span class="status-dot"></span>
+        <span>SYS // TELEMETRY DIRECTORY — VERIFIED CATALOG</span>
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-title">Industrial Precision & Data-Led Commerce</h1>
+        <p class="hero-subtitle">Curated high-grade electronics, fashion, publication media, and home architecture with real-time stock telemetry and encrypted fulfillment.</p>
+      </div>
+
+      <div class="hero-metrics">
+        <div class="metric-item">
+          <span class="metric-value">24H</span>
+          <span class="metric-label">Dispatch Latency</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-value">100%</span>
+          <span class="metric-label">Verified Specs</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-value">AES-256</span>
+          <span class="metric-label">Transaction Layer</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toolbar for Filtering & Sorting (Search is centralized in Top Navbar) -->
+    <section class="filter-toolbar" style="justify-content: flex-end;">
+      <div class="filter-controls" style="width: 100%; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">PRICE RANGE:</span>
+          <input type="number" id="min-price-input" class="search-input" placeholder="MIN ₹" style="width: 85px; padding: 0.55rem; background: var(--bg-paper-elevated); border: 1px solid var(--border-paper-strong); font-family: var(--font-mono); font-size: 0.8rem;" />
+          <span style="color: var(--text-muted); font-family: var(--font-mono);">-</span>
+          <input type="number" id="max-price-input" class="search-input" placeholder="MAX ₹" style="width: 85px; padding: 0.55rem; background: var(--bg-paper-elevated); border: 1px solid var(--border-paper-strong); font-family: var(--font-mono); font-size: 0.8rem;" />
+          <button id="apply-price-btn" class="btn-secondary" style="padding: 0.55rem 0.85rem; font-size: 0.78rem;">FILTER</button>
+        </div>
+
+        <select id="sort-select" class="select-control">
+          <option value="newest">SORT: NEWEST ARRIVALS</option>
+          <option value="price_asc">SORT: PRICE LOW → HIGH</option>
+          <option value="price_desc">SORT: PRICE HIGH → LOW</option>
+          <option value="name">SORT: ALPHABETICAL (A-Z)</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Category Pills -->
+    <div id="category-pills-container" class="category-pills"></div>
+
+    <!-- Product Catalog Grid -->
+    <div id="product-grid-container" class="product-grid"></div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/product.js"></script>
+</body>
+</html>

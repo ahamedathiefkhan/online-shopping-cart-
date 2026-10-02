@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHECKOUT // DIGICART</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="main-container">
+    <div style="margin-bottom: 2rem; border-bottom: 2px solid var(--border-paper-strong); padding-bottom: 1rem;">
+      <div class="mono-spec" style="font-size: 0.75rem; color: var(--text-subtle);">[SPEC // ORDER DISPATCH PROTOCOL]</div>
+      <h1 style="font-size: 2rem; color: var(--evergreen-dark);">Fulfillment & Dispatch</h1>
+    </div>
+
+    <div class="cart-layout">
+      <!-- Shipping & Payment Form -->
+      <div class="cart-table-card">
+        <h3 style="margin-bottom: 1.5rem; color: var(--evergreen-dark);">Fulfillment Address Specification</h3>
+
+        <form id="checkout-form" onsubmit="handleCheckoutFormSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="ship-address">STREET ADDRESS</label>
+            <input type="text" id="ship-address" name="address" class="form-control" placeholder="123 Industrial Parkway, Suite 400" required />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="ship-city">CITY</label>
+              <input type="text" id="ship-city" name="city" class="form-control" placeholder="San Francisco" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ship-state">STATE / PROVINCE</label>
+              <input type="text" id="ship-state" name="state" class="form-control" placeholder="CA" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ship-zip">POSTAL CODE</label>
+              <input type="text" id="ship-zip" name="zip" class="form-control" placeholder="94105" required />
+            </div>
+          </div>
+
+          <h3 style="margin: 2rem 0 1rem 0; color: var(--evergreen-dark);">Transaction Verification</h3>
+          <div style="background: var(--bg-paper-elevated); border: 1px solid var(--border-paper-strong); border-radius: var(--radius-xs); padding: 1rem; margin-bottom: 1.5rem;">
+            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600; color: var(--text-main);">
+              <input type="radio" name="payment_method" value="card" checked />
+              💳 AES-256 SIMULATED CARD DISPATCH PROTOCOL
+            </label>
+          </div>
+
+          <button type="submit" id="place-order-btn" class="btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1rem; margin-top: 1rem;">
+            AUTHORIZE DISPATCH & DISPATCH ORDER →
+          </button>
+        </form>
+      </div>
+
+      <!-- Checkout Order Items Review -->
+      <div class="summary-card">
+        <h3 style="margin-bottom: 1.25rem; color: #ffffff; font-size: 1.25rem;">Manifest Audit</h3>
+        <div id="checkout-items-list" style="margin-bottom: 1.5rem; max-height: 250px; overflow-y: auto;">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <div class="summary-row total">
+          <span>GRAND TOTAL</span>
+          <span id="checkout-total-amount">₹0.00</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/order.js"></script>
+</body>
+</html>
