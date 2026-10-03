@@ -85,6 +85,7 @@ async function updateCartBadge() {
 }
 
 // Render Industrial Header Navigation — Amazon-Style Top Navigation Bar (Sub-Navbar Removed)
+// Render Industrial Header Navigation — Amazon-Style Top Navigation Bar with Mobile Drawer Support
 function renderNavbar() {
   const header = document.getElementById('site-header');
   if (!header) return;
@@ -96,11 +97,20 @@ function renderNavbar() {
     <nav class="navbar">
       <!-- Main Top Navigation Bar -->
       <div class="nav-main-bar">
-        <!-- Brand Logo -->
-        <a href="/pages/index.html" class="brand-logo" title="digiCart Home">
-          <img src="/images/digicart-icon.png" alt="digiCart" class="brand-logo-img" />
-          <span class="brand-logo-text">digi<span class="brand-logo-accent">Cart</span></span>
-        </a>
+        <div class="nav-left-group">
+          <!-- Mobile Hamburger Toggle Button -->
+          <button type="button" class="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Open Navigation Menu">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+          </button>
+
+          <!-- Brand Logo -->
+          <a href="/pages/index.html" class="brand-logo" title="digiCart Home">
+            <img src="/images/digicart-icon.png" alt="digiCart" class="brand-logo-img" />
+            <span class="brand-logo-text">digi<span class="brand-logo-accent">Cart</span></span>
+          </a>
+        </div>
 
         <!-- Location Selector Widget -->
         <div class="nav-location-widget" title="Click to Change Delivery Location" onclick="changeDeliveryLocation()">
@@ -157,14 +167,87 @@ function renderNavbar() {
           <!-- Cart Button -->
           <a href="/pages/cart.html" class="cart-btn-link-amazon">
             <span style="font-size: 1.25rem;">🛒</span>
-            <span>CART</span>
+            <span class="cart-btn-label">CART</span>
             <span id="cart-count-badge" class="cart-badge">0</span>
           </a>
         </div>
       </div>
     </nav>
+
+    <!-- Mobile Drawer Overlay & Sliding Side Panel -->
+    <div id="mobile-nav-backdrop" class="mobile-nav-backdrop" onclick="toggleMobileNav(false)"></div>
+    <aside id="mobile-nav-drawer" class="mobile-nav-drawer">
+      <div class="mobile-drawer-header">
+        <div id="mobile-user-greeting" class="mobile-user-greeting">
+          <span>👤 Hello, Sign In</span>
+        </div>
+        <button class="mobile-drawer-close" onclick="toggleMobileNav(false)" aria-label="Close Menu">✕</button>
+      </div>
+
+      <div class="mobile-drawer-body">
+        <div class="mobile-drawer-section">
+          <div class="mobile-drawer-title">DELIVERY LOCATION</div>
+          <div class="mobile-drawer-item" onclick="changeDeliveryLocation(); toggleMobileNav(false);">
+            <span>📍 ${currentLocation}</span>
+            <span style="font-size: 0.75rem; color: var(--lime-accent);">Change</span>
+          </div>
+        </div>
+
+        <div class="mobile-drawer-section">
+          <div class="mobile-drawer-title">QUICK NAVIGATION</div>
+          <a href="/pages/index.html" class="mobile-drawer-link" onclick="toggleMobileNav(false)">
+            <span>🏠 Catalog Home</span>
+          </a>
+          <a href="/pages/cart.html" class="mobile-drawer-link" onclick="toggleMobileNav(false)">
+            <span>🛒 Shopping Cart</span>
+          </a>
+          <a href="/pages/order-history.html" class="mobile-drawer-link" onclick="toggleMobileNav(false)">
+            <span>📦 Order History & Returns</span>
+          </a>
+          <a href="/pages/profile.html" class="mobile-drawer-link" onclick="toggleMobileNav(false)">
+            <span>👤 Account Profile</span>
+          </a>
+          <div id="mobile-admin-link-container"></div>
+        </div>
+
+        <div class="mobile-drawer-section">
+          <div class="mobile-drawer-title">BROWSE CATEGORIES</div>
+          <a href="/pages/index.html?category_id=1" class="mobile-drawer-link" onclick="toggleMobileNav(false)">⚡ Electronics</a>
+          <a href="/pages/index.html?category_id=2" class="mobile-drawer-link" onclick="toggleMobileNav(false)">👕 Fashion & Clothing</a>
+          <a href="/pages/index.html?category_id=3" class="mobile-drawer-link" onclick="toggleMobileNav(false)">📚 Books & Stationery</a>
+          <a href="/pages/index.html?category_id=4" class="mobile-drawer-link" onclick="toggleMobileNav(false)">🏡 Home & Living</a>
+        </div>
+
+        <div class="mobile-drawer-section" id="mobile-auth-section">
+          <a href="/pages/login.html" class="mobile-drawer-link" onclick="toggleMobileNav(false)">🔑 Sign In</a>
+          <a href="/pages/register.html" class="mobile-drawer-link" onclick="toggleMobileNav(false)">📝 Create Account</a>
+        </div>
+      </div>
+    </aside>
   `;
 }
+
+// Toggle Mobile Navigation Drawer
+function toggleMobileNav(forceState) {
+  const backdrop = document.getElementById('mobile-nav-backdrop');
+  const drawer = document.getElementById('mobile-nav-drawer');
+  if (!backdrop || !drawer) return;
+
+  const isOpen = drawer.classList.contains('active');
+  const shouldOpen = typeof forceState === 'boolean' ? forceState : !isOpen;
+
+  if (shouldOpen) {
+    backdrop.classList.add('active');
+    drawer.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  } else {
+    backdrop.classList.remove('active');
+    drawer.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+window.toggleMobileNav = toggleMobileNav;
+
 
 // Location Change Handler
 function changeDeliveryLocation() {
@@ -215,50 +298,90 @@ function handleNavSearchSubmit(event) {
 
 function updateNavbarUserUI() {
   const userContainer = document.getElementById('user-nav-container');
-
-  if (!userContainer) return;
+  const mobileGreeting = document.getElementById('mobile-user-greeting');
+  const mobileAdminContainer = document.getElementById('mobile-admin-link-container');
+  const mobileAuthSection = document.getElementById('mobile-auth-section');
 
   if (currentUser) {
     const firstName = currentUser.name ? currentUser.name.split(' ')[0] : 'User';
     const subText = currentUser.phone ? `📱 ${currentUser.phone}` : 'Account & Profile';
     const isAdmin = currentUser.role === 'admin';
 
-    userContainer.innerHTML = `
-      <div class="user-dropdown-wrapper">
-        <div class="nav-action-item">
-          <span class="nav-action-sub">Hello, ${firstName}</span>
-          <span class="nav-action-main">${subText} ▾</span>
-        </div>
-        <div class="user-dropdown-menu">
-          <a href="/pages/profile.html" class="user-dropdown-item">
-            <span>👤</span>
-            <span>Your Profile</span>
-          </a>
-          <a href="/pages/order-history.html" class="user-dropdown-item">
-            <span>📦</span>
-            <span>Your Orders</span>
-          </a>
-          ${isAdmin ? `
-            <a href="/pages/admin/dashboard.html" class="user-dropdown-item" style="color: var(--lime-accent);">
-              <span>⚙</span>
-              <span>Telemetry Panel</span>
+    if (userContainer) {
+      userContainer.innerHTML = `
+        <div class="user-dropdown-wrapper">
+          <div class="nav-action-item">
+            <span class="nav-action-sub">Hello, ${firstName}</span>
+            <span class="nav-action-main">${subText} ▾</span>
+          </div>
+          <div class="user-dropdown-menu">
+            <a href="/pages/profile.html" class="user-dropdown-item">
+              <span>👤</span>
+              <span>Your Profile</span>
             </a>
-          ` : ''}
-          <div style="border-top: 1px solid var(--evergreen-surface); margin: 0.25rem 0;"></div>
-          <button onclick="handleLogout()" class="user-dropdown-item" style="width: 100%; border: none; background: none; cursor: pointer; text-align: left; color: var(--status-error);">
-            <span>🚪</span>
-            <span>Sign Out</span>
-          </button>
+            <a href="/pages/order-history.html" class="user-dropdown-item">
+              <span>📦</span>
+              <span>Your Orders</span>
+            </a>
+            ${isAdmin ? `
+              <a href="/pages/admin/dashboard.html" class="user-dropdown-item" style="color: var(--lime-accent);">
+                <span>⚙</span>
+                <span>Telemetry Panel</span>
+              </a>
+            ` : ''}
+            <div style="border-top: 1px solid var(--evergreen-surface); margin: 0.25rem 0;"></div>
+            <button onclick="handleLogout()" class="user-dropdown-item" style="width: 100%; border: none; background: none; cursor: pointer; text-align: left; color: var(--status-error);">
+              <span>🚪</span>
+              <span>Sign Out</span>
+            </button>
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    }
+
+    if (mobileGreeting) {
+      mobileGreeting.innerHTML = `<span>👤 Hello, ${firstName}</span>`;
+    }
+
+    if (mobileAdminContainer) {
+      mobileAdminContainer.innerHTML = isAdmin ? `
+        <a href="/pages/admin/dashboard.html" class="mobile-drawer-link" style="color: var(--lime-accent);" onclick="toggleMobileNav(false)">
+          <span>⚙ Admin Telemetry Dashboard</span>
+        </a>
+      ` : '';
+    }
+
+    if (mobileAuthSection) {
+      mobileAuthSection.innerHTML = `
+        <button onclick="handleLogout(); toggleMobileNav(false);" class="mobile-drawer-link" style="width: 100%; border: none; background: none; cursor: pointer; text-align: left; color: var(--status-error);">
+          <span>🚪 Sign Out</span>
+        </button>
+      `;
+    }
   } else {
-    userContainer.innerHTML = `
-      <a href="/pages/login.html" class="nav-action-item">
-        <span class="nav-action-sub">Hello, sign in</span>
-        <span class="nav-action-main">Mobile & Account ▾</span>
-      </a>
-    `;
+    if (userContainer) {
+      userContainer.innerHTML = `
+        <a href="/pages/login.html" class="nav-action-item">
+          <span class="nav-action-sub">Hello, sign in</span>
+          <span class="nav-action-main">Mobile & Account ▾</span>
+        </a>
+      `;
+    }
+
+    if (mobileGreeting) {
+      mobileGreeting.innerHTML = `<span>👤 Hello, Sign In</span>`;
+    }
+
+    if (mobileAdminContainer) {
+      mobileAdminContainer.innerHTML = '';
+    }
+
+    if (mobileAuthSection) {
+      mobileAuthSection.innerHTML = `
+        <a href="/pages/login.html" class="mobile-drawer-link" onclick="toggleMobileNav(false)">🔑 Sign In</a>
+        <a href="/pages/register.html" class="mobile-drawer-link" onclick="toggleMobileNav(false)">📝 Create Account</a>
+      `;
+    }
   }
 }
 
